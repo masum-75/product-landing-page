@@ -48,7 +48,7 @@ const Banner = () => {
     <section className="w-full overflow-hidden">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
-        effect="fade" // Smooth fade transition
+        effect="fade" 
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         className="h-[500px] md:h-[650px]"
@@ -60,7 +60,6 @@ const Banner = () => {
               style={{ backgroundColor: slide.color }}
             >
               <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center h-full">
-                {/* Text Content with 3D Entrance */}
                 <div className="md:w-1/2 text-center md:text-left order-2 md:order-1 z-10">
                   <motion.div
                     initial={{ opacity: 0, x: -100, rotateX: 45 }}
@@ -86,9 +85,7 @@ const Banner = () => {
                   </motion.div>
                 </div>
 
-                {/* 3D Image Section with Parallax */}
                 <div className="md:w-1/2 flex justify-center order-1 md:order-2 py-10 relative">
-                  {/* Background Decorative Circle */}
                   <motion.div
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
@@ -109,7 +106,6 @@ const Banner = () => {
                       alt="banner"
                     />
 
-                    {/* Floating 3D Badge (Extra Topic) */}
                     <motion.div
                       animate={{ y: [0, -20, 0] }}
                       transition={{
