@@ -152,7 +152,7 @@ const ProductDetailsPage = () => {
 
               <button
                 onClick={() => addToCart(product, qty)}
-                className="flex-grow bg-[#00a884] text-white font-black py-6 rounded-full flex items-center justify-center gap-4 hover:bg-black transition-all shadow-2xl shadow-teal-100 uppercase tracking-widest text-sm"
+                className="flex-grow bg-[#00a884] text-white font-black py-3 px-3 rounded-lg flex items-center justify-center gap-4 hover:bg-black transition-all shadow-2xl shadow-teal-100 uppercase tracking-widest text-sm"
               >
                 <ShoppingCart size={22} strokeWidth={2.5} /> Add to Cart
               </button>
