@@ -48,10 +48,10 @@ const Banner = () => {
     <section className="w-full overflow-hidden">
       <Swiper
         modules={[Autoplay, Pagination, EffectFade]}
-        effect="fade" 
+        effect="fade"
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
-        className="h-[500px] md:h-[650px]"
+        className="h-[600px] md:h-[650px] lg:h-[750px]"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -59,55 +59,30 @@ const Banner = () => {
               className="w-full h-full flex items-center transition-colors duration-1000"
               style={{ backgroundColor: slide.color }}
             >
-              <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center h-full">
-                <div className="md:w-1/2 text-center md:text-left order-2 md:order-1 z-10">
+              <div className="container mx-auto px-6 md:px-12 h-full flex flex-col md:flex-row items-center justify-center md:justify-between py-10 md:py-0">
+                {/* Image Section - Mobile-e upore ar middle-e thakbe */}
+                <div className="w-full md:w-1/2 flex justify-center order-1 md:order-2 relative mb-8 md:mb-0">
                   <motion.div
-                    initial={{ opacity: 0, x: -100, rotateX: 45 }}
-                    whileInView={{ opacity: 1, x: 0, rotateX: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                  >
-                    <span className="text-[#00a884] font-black tracking-[0.3em] text-xs mb-4 block uppercase">
-                      {slide.subtitle}
-                    </span>
-                    <h1 className="text-4xl md:text-7xl font-serif font-bold text-gray-900 leading-[1.1] mb-8">
-                      {slide.title}
-                    </h1>
-                    <motion.button
-                      whileHover={{
-                        scale: 1.1,
-                        boxShadow: "0px 20px 40px rgba(0, 168, 132, 0.2)",
-                      }}
-                      whileTap={{ scale: 0.9 }}
-                      className="px-12 py-4 bg-[#00a884] text-white font-black rounded-full hover:bg-black transition-all shadow-xl shadow-teal-100 uppercase tracking-widest text-sm"
-                    >
-                      Explore Collection
-                    </motion.button>
-                  </motion.div>
-                </div>
-
-                <div className="md:w-1/2 flex justify-center order-1 md:order-2 py-10 relative">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    className="absolute w-64 h-64 md:w-96 md:h-96 bg-white/50 rounded-full blur-3xl -z-10"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    className="absolute w-40 h-40 sm:w-64 sm:h-64 md:w-[450px] md:h-[450px] bg-white/60 rounded-full blur-3xl -z-10"
                   />
 
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.5, rotateY: -30 }}
-                    whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-                    transition={{ duration: 1, type: "spring", stiffness: 100 }}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 1, type: "spring" }}
                     className="relative"
-                    style={{ perspective: "1000px" }}
                   >
                     <img
                       src={slide.img}
-                      className="h-72 md:h-[450px] object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.15)]"
-                      style={{ transformStyle: "preserve-3d" }}
-                      alt="banner"
+                      className="h-52 sm:h-64 md:h-[450px] lg:h-[500px] object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.1)]"
+                      alt="Mumuso Banner"
                     />
 
+                    {/* Floating Info - Visible only on Desktop/Tablet */}
                     <motion.div
-                      animate={{ y: [0, -20, 0] }}
+                      animate={{ y: [0, -15, 0] }}
                       transition={{
                         duration: 4,
                         repeat: Infinity,
@@ -122,6 +97,30 @@ const Banner = () => {
                         2026 Edition
                       </p>
                     </motion.div>
+                  </motion.div>
+                </div>
+
+                {/* Text Content - Mobile-e middle-e thakbe, Desktop-e left-e */}
+                <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left order-2 md:order-1 z-10">
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8 }}
+                  >
+                    <span className="text-[#00a884] font-black tracking-[0.2em] md:tracking-[0.3em] text-[10px] md:text-xs mb-3 md:mb-4 block uppercase">
+                      {slide.subtitle}
+                    </span>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-gray-900 leading-[1.2] md:leading-[1.1] mb-6 md:mb-10 max-w-xl">
+                      {slide.title}
+                    </h1>
+
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-10 md:px-14 py-3.5 md:py-4 bg-[#00a884] text-white font-black rounded-full hover:bg-black transition-all shadow-xl shadow-teal-100 uppercase tracking-widest text-[11px] md:text-xs"
+                    >
+                      Explore Collection
+                    </motion.button>
                   </motion.div>
                 </div>
               </div>
