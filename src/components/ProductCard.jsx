@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
@@ -7,88 +7,110 @@ import { useCart } from "../context/CartContext";
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const [isHovered, setIsHovered] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
 
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
+  const imgRotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    ["25deg", "-25deg"],
+  );
+  const imgRotateY = useTransform(
+    mouseXSpring,
+    [-0.5, 0.5],
+    ["-25deg", "25deg"],
+  );
+
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
     x.set(xPct);
     y.set(yPct);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateY,
-        rotateX,
-        transformStyle: "preserve-3d",
-      }}
-      onClick={() => navigate(`/product/${product.slug}`)}
-      className="relative h-96 w-full rounded-2xl bg-white border border-gray-100 p-6 cursor-pointer shadow-sm hover:shadow-2xl transition-shadow duration-500"
-    >
-      <div
+    <div className="p-2" style={{ perspective: "1000px" }}>
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          x.set(0);
+          y.set(0);
+        }}
         style={{
-          transform: "translateZ(75px)",
+          rotateY: isHovered ? rotateY : 0,
+          rotateX: isHovered ? rotateX : 0,
           transformStyle: "preserve-3d",
         }}
-        className="h-full flex flex-col justify-between"
+        onClick={() => navigate(`/product/${product.slug}`)}
+        className="relative h-[350px] w-full rounded-2xl bg-white border border-gray-100 p-4 cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-500"
       >
-        {/* Floating Image */}
         <div
-          style={{ transform: "translateZ(50px)" }}
-          className="flex-1 flex items-center justify-center"
+          style={{
+            transform: isHovered ? "translateZ(40px)" : "translateZ(0px)",
+            transformStyle: "preserve-3d",
+            transition:
+              "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+          }}
+          className="h-full flex flex-col"
         >
-          <img
-            src={product.image}
-            alt={product.name}
-            className="max-h-48 object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.2)]"
-          />
-        </div>
-
-        {/* Content */}
-        <div style={{ transform: "translateZ(30px)" }}>
-          <h3 className="text-sm font-bold text-gray-800 line-clamp-2">
-            {product.name}
-          </h3>
-          <div className="mt-4 flex justify-between items-center">
-            <span className="text-xl font-black text-[#00a884]">
-              ৳{product.price}
-            </span>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                addToCart(product, 1);
+          {/* Image Section */}
+          <div
+            className="h-44 flex items-center justify-center relative mb-2"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            <motion.img
+              src={product.image}
+              alt={product.name}
+              style={{
+                rotateX: isHovered ? imgRotateX : 0,
+                rotateY: isHovered ? imgRotateY : 0,
+                z: isHovered ? 60 : 0,
+                scale: isHovered ? 1.1 : 1,
               }}
-              className="p-3 bg-[#00a884] text-white rounded-xl hover:bg-black transition-colors shadow-lg"
-            >
-              <ShoppingCart size={18} />
-            </button>
+              className="max-h-full max-w-full object-contain drop-shadow-2xl pointer-events-none"
+            />
+          </div>
+
+          {/* Content Section */}
+          <div
+            className="flex-grow flex flex-col justify-end"
+            style={{
+              transform: "translateZ(30px)",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            <h3 className="text-[13px] font-bold text-gray-800 line-clamp-2 leading-tight mb-2">
+              {product.name}
+            </h3>
+            <div className="flex justify-between items-center mt-auto">
+              <span className="text-lg font-black text-[#00a884]">
+                ৳{product.price}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product, 1);
+                }}
+                className="p-2 bg-[#00a884] text-white rounded-lg hover:bg-black transition-colors active:scale-90"
+              >
+                <ShoppingCart size={16} />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
