@@ -12,21 +12,20 @@ const ProductCard = ({ product }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+  // Smoothness baranor jonno stiffness komiye damping ektu bariyechi
+  const mouseXSpring = useSpring(x, { stiffness: 60, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 60, damping: 20 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
-
-  const imgRotateX = useTransform(
-    mouseYSpring,
-    [-0.5, 0.5],
-    ["25deg", "-25deg"],
-  );
+  // 360 Degree Rotation Logic
   const imgRotateY = useTransform(
     mouseXSpring,
     [-0.5, 0.5],
-    ["-25deg", "25deg"],
+    ["180deg", "-180deg"],
+  );
+  const imgRotateX = useTransform(
+    mouseYSpring,
+    [-0.5, 0.5],
+    ["-30deg", "30deg"],
   );
 
   const handleMouseMove = (e) => {
@@ -37,59 +36,52 @@ const ProductCard = ({ product }) => {
     y.set(yPct);
   };
 
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    x.set(0);
+    y.set(0);
+  };
+
   return (
-    <div className="p-2" style={{ perspective: "1000px" }}>
-      <motion.div
+    <div className="p-2" style={{ perspective: "1500px" }}>
+      <div
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          x.set(0);
-          y.set(0);
-        }}
-        style={{
-          rotateY: isHovered ? rotateY : 0,
-          rotateX: isHovered ? rotateX : 0,
-          transformStyle: "preserve-3d",
-        }}
+        onMouseLeave={handleMouseLeave}
         onClick={() => navigate(`/product/${product.slug}`)}
-        className="relative h-[350px] w-full rounded-2xl bg-white border border-gray-100 p-4 cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-500"
+        className="relative h-[350px] w-full rounded-2xl bg-white border border-gray-100 p-4 cursor-pointer shadow-sm hover:shadow-xl transition-shadow duration-500 overflow-hidden"
       >
-        <div
-          style={{
-            transform: isHovered ? "translateZ(40px)" : "translateZ(0px)",
-            transformStyle: "preserve-3d",
-            transition:
-              "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-          }}
-          className="h-full flex flex-col"
-        >
+        <div className="h-full flex flex-col">
           {/* Image Section */}
           <div
             className="h-44 flex items-center justify-center relative mb-2"
             style={{ transformStyle: "preserve-3d" }}
           >
+            {/* Glow effect for better depth */}
+            <motion.div
+              animate={{
+                opacity: isHovered ? 1 : 0,
+                scale: isHovered ? 1 : 0.5,
+              }}
+              className="absolute h-32 w-32 bg-[#00a884]/10 blur-[50px] rounded-full"
+            />
+
             <motion.img
               src={product.image}
               alt={product.name}
               style={{
-                rotateX: isHovered ? imgRotateX : 0,
-                rotateY: isHovered ? imgRotateY : 0,
-                z: isHovered ? 60 : 0,
-                scale: isHovered ? 1.1 : 1,
+                rotateY: imgRotateY,
+                rotateX: imgRotateX,
+                z: isHovered ? 120 : 0,
+                scale: isHovered ? 1.25 : 1,
+                transformStyle: "preserve-3d",
               }}
-              className="max-h-full max-w-full object-contain drop-shadow-2xl pointer-events-none"
+              className="max-h-full max-w-full object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.15)] pointer-events-none"
             />
           </div>
 
           {/* Content Section */}
-          <div
-            className="flex-grow flex flex-col justify-end"
-            style={{
-              transform: "translateZ(30px)",
-              transformStyle: "preserve-3d",
-            }}
-          >
+          <div className="flex-grow flex flex-col justify-end">
             <h3 className="text-[13px] font-bold text-gray-800 line-clamp-2 leading-tight mb-2">
               {product.name}
             </h3>
@@ -109,7 +101,7 @@ const ProductCard = ({ product }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
