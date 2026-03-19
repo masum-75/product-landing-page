@@ -7,12 +7,13 @@ import { CartProvider } from "./context/CartContext";
 import App from "./App";
 import LandingPage from "./pages/LandingPage";
 import ProductDetailsPage from "./components/ProductDetailsPage";
-
+import MakeupPage from "./components/MakeupPage";
+import MakeupDetailsWrapper from "./components/MakeupDetailsWrapper";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />, 
+    element: <App />,
     children: [
       {
         path: "/",
@@ -22,6 +23,14 @@ const router = createBrowserRouter([
         path: "/product/:slug",
         element: <ProductDetailsPage />,
       },
+      {
+        path: "/makeup",
+        element: <MakeupPage />,
+      },
+      {
+  path: "makeup/:slug",
+  element: <MakeupDetailsWrapper /> 
+}
     ],
   },
 ]);

@@ -41,7 +41,6 @@ const ProductDetailsPage = () => {
 
   const scale = useSpring(isHovered ? 1.3 : 1, { stiffness: 70, damping: 15 });
 
-  // Mouse and Touch Event Handler
   const handleMove = (clientX, clientY, currentTarget) => {
     const rect = currentTarget.getBoundingClientRect();
     const xPct = (clientX - rect.left) / rect.width - 0.5;
@@ -76,7 +75,6 @@ const ProductDetailsPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-white overflow-x-hidden">
       <main className="container mx-auto px-4 sm:px-6 md:px-12 py-6 md:py-10 flex-grow">
-        {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-gray-400 hover:text-black mb-6 md:mb-12 transition-all font-bold uppercase text-[10px] md:text-xs tracking-widest"
@@ -85,7 +83,6 @@ const ProductDetailsPage = () => {
         </button>
 
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20 items-center">
-          {/* 360° Image Section */}
           <div
             className="w-full lg:w-1/2 flex justify-center"
             style={{ perspective: "1500px" }}
@@ -134,7 +131,6 @@ const ProductDetailsPage = () => {
                 className="max-h-[70%] md:max-h-[75%] object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.1)] pointer-events-none"
               />
 
-              {/* Floating Badge (Hidden on small mobile for space) */}
               <div className="absolute top-6 right-6 bg-white/80 backdrop-blur-md p-3 md:p-4 rounded-xl md:rounded-2xl border border-white shadow-lg hidden sm:block">
                 <div className="text-[8px] md:text-[10px] font-black text-[#00a884] uppercase">
                   Authentic
@@ -146,7 +142,6 @@ const ProductDetailsPage = () => {
             </motion.div>
           </div>
 
-          {/* Details Section */}
           <div className="w-full lg:w-1/2 flex flex-col text-center lg:text-left">
             <div className="text-[#00a884] font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] mb-3 md:mb-4">
               Official Mumuso Store
@@ -170,7 +165,6 @@ const ProductDetailsPage = () => {
                 "Experience the perfect blend of style and utility with this Mumuso lifestyle essential."}
             </p>
 
-            {/* Qty & Add to Cart */}
             <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-8 mb-10 md:mb-12">
               <div className="flex items-center border-2 border-gray-100 rounded-full p-1 bg-gray-50/50">
                 <button
@@ -198,7 +192,6 @@ const ProductDetailsPage = () => {
               </button>
             </div>
 
-            {/* Trust Badges */}
             <div className="grid grid-cols-3 gap-2 md:gap-4 pt-8 md:pt-10 border-t border-gray-100">
               <Badge
                 icon={<ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />}

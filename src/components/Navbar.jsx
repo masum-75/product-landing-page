@@ -18,7 +18,7 @@ const Navbar = ({ onCartClick }) => {
         <a href="#" className="hover:text-[#00a884]">
           New
         </a>
-        <a href="#" className="hover:text-[#00a884]">
+        <a href="/makeup" className="hover:text-[#00a884]">
           Makeup
         </a>
         <a href="#" className="hover:text-[#00a884]">
