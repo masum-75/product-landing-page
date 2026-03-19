@@ -12,7 +12,7 @@ const Navbar = ({ onCartClick }) => {
   return (
     <nav className="relative bg-white border-b sticky top-0 z-[100]">
       <div className="flex justify-between items-center px-6 md:px-12 py-5">
-        {/* Mobile Menu Icon (Left side) */}
+        
         <div className="lg:hidden">
           <Menu 
             size={24} 
@@ -21,7 +21,7 @@ const Navbar = ({ onCartClick }) => {
           />
         </div>
 
-        {/* Logo */}
+     
         <Link
           to="/"
           className="text-2xl font-black text-[#00a884] tracking-tighter uppercase"
@@ -29,7 +29,7 @@ const Navbar = ({ onCartClick }) => {
           MUMUSO
         </Link>
 
-        {/* Desktop Menu Items */}
+       
         <div className="hidden lg:flex space-x-8 text-[11px] font-bold uppercase tracking-widest text-gray-500">
           <a href="#" className="hover:text-[#00a884]">New</a>
           <a href="/makeup" className="hover:text-[#00a884]">Makeup</a>
@@ -37,7 +37,6 @@ const Navbar = ({ onCartClick }) => {
           <a href="#" className="hover:text-[#00a884]">3C Electronics</a>
         </div>
 
-        {/* Icons (Search, Heart, Cart, User) */}
         <div className="flex items-center space-x-4 md:space-x-6 text-gray-700">
           <Search size={20} className="hidden sm:block cursor-pointer hover:text-[#00a884]" />
           <Heart size={20} className="hidden sm:block cursor-pointer hover:text-[#00a884]" />
@@ -55,13 +54,12 @@ const Navbar = ({ onCartClick }) => {
         </div>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
+      
       <div 
         className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity lg:hidden ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`} 
         onClick={toggleMenu}
       ></div>
 
-      {/* Mobile Sidebar Menu */}
       <div 
         className={`fixed top-0 left-0 h-full w-[280px] bg-white z-[110] transform transition-transform duration-300 ease-in-out lg:hidden ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
